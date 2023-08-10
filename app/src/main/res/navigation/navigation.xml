@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/noteFragment">
+
+    <fragment
+        android:id="@+id/noteFragment"
+        android:name="com.project.notebookapp.ui.NoteFragment"
+        android:label="fragment_note"
+        tools:layout="@layout/fragment_note" >
+        <action
+            android:id="@+id/action_noteFragment_to_aboutUsFragment"
+            app:destination="@id/aboutUsFragment" />
+        <action
+            android:id="@+id/action_noteFragment_to_newNoteModal"
+            app:destination="@id/newNoteModal" />
+    </fragment>
+    <fragment
+        android:id="@+id/newNoteModal"
+        android:name="com.project.notebookapp.ui.NewNoteFragment"
+        android:label="fragment_new_note_modal"
+        tools:layout="@layout/fragment_new_note_modal" >
+        <action
+            android:id="@+id/action_newNoteModal_to_colourModalSheet"
+            app:destination="@id/colourModalSheet" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutUsFragment"
+        android:name="com.project.notebookapp.ui.AboutUsFragment"
+        android:label="fragment_about_us"
+        tools:layout="@layout/fragment_about_us" />
+    <dialog
+        android:id="@+id/colourModalSheet"
+        android:name="com.project.notebookapp.ui.ColourModalSheet"
+        android:label="fragment_color_palette_modal"
+        tools:layout="@layout/fragment_color_palette_modal" />
+</navigation>

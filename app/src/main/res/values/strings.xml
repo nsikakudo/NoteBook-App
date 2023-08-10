@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">NoteBook App</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="screen_details">Sell houses easily with the help of Listenoryx and to make this line big I am writing more.</string>
+    <string name="add_note">ADD NOTE</string>
+    <string name="my_notes">My Notes</string>
+    <string name="new_note">New Note</string>
+    <string name="save">save</string>
+    <string name="note_title">Note Title</string>
+    <string name="note">Note</string>
+
+    <string name="about_us">About Us</string>
+    <string name="share">share</string>
+        <string name="about_details">Welcome to our innovative and user-friendly note-taking app for Android! We are passionate about providing you with a seamless and efficient way to capture your thoughts, ideas, and important information on the go. \n \nAt <b>D\'NoteBook</b>, we understand the significance of keeping track of your daily inspirations and tasks. Our app is designed to empower you to organize your life effortlessly while maintaining a minimalistic and intuitive interface.</string>
+        <string name="mission">Our Mission</string>
+        <string name="mission_details">Our mission is to enhance your productivity and creativity by offering a reliable digital platform for all your note-taking needs. We believe that technology should work for you, simplifying your life rather than complicating it. With this belief at heart, we are dedicated to delivering a note-taking app that harmoniously blends simplicity with powerful features.\n</string>
+        <string name="get_in_touch">Get In Touch</string>
+        <string name="touch_details">We love hearing from our users\! If you have any questions, suggestions, or feedback, feel free to reach out to us at <b>udonsikak13@gmail.com</b>. Your input drives us to continually refine and enhance our app to suit your needs.\n \nThank you for choosing <b>D\'NoteBook</b> as your go-to note-taking companion. Here\'s to a more organized and productive you\!\n\nWarm regards\, \n<b>The D\'NoteBook Team</b></string>
+
+</resources>
