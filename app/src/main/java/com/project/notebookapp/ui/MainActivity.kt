@@ -1,7 +1,8 @@
-package com.project.notebookapp
+package com.project.notebookapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.project.notebookapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

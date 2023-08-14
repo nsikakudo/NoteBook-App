@@ -4,69 +4,131 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:id="@+id/container"
     tools:context=".ui.NewNoteFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/appBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="14dp"
+        android:theme="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_margin="0dp">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar"
-                style="@style/Widget.MaterialComponents.Toolbar.Surface"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:backgroundTint="@color/white"
-                app:menu="@menu/main_menu"
-                app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-                app:title="Edited" />
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/back_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
 
-        </com.google.android.material.appbar.AppBarLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/editModeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_white_background1"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="4dp"
+                android:text="@string/edited_on"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/shareButton"
+                app:layout_constraintStart_toEndOf="@id/backButton"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/shareButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/save_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/saveButton"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_share_24" />
+
+            <ImageButton
+                android:id="@+id/saveButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/save_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_save_24" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
 
     <EditText
-        android:id="@+id/editText"
-        android:layout_width="match_parent"
+        android:id="@+id/edtTitle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="@string/note_title"
+        android:layout_marginTop="10dp"
+        android:autofillHints="none"
+        android:background="@android:color/transparent"
+        android:ellipsize="end"
+        android:hint="@string/title"
+        android:inputType="textCapWords|textMultiLine"
+        android:maxLines="2"
+        android:padding="10dp"
         android:textColor="@color/black"
-        android:textSize="25sp"
+        android:textIsSelectable="true"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.781"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        android:autofillHints=""
-        android:inputType="text" />
+         />
 
     <EditText
-        android:layout_width="match_parent"
+        android:id="@+id/edtNote"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
+        android:autofillHints="none"
+        android:background="@android:color/transparent"
+        android:gravity="top"
         android:hint="@string/note"
+        android:inputType="textCapSentences|textMultiLine"
+        android:padding="10dp"
         android:textColor="@color/black"
-        android:textSize="25sp"
+        android:textIsSelectable="true"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
-        android:autofillHints=""
-        android:inputType="text" />
+        app:layout_constraintTop_toBottomOf="@+id/edtTitle"
+         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddColour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="16dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_color_lens_24" />
+        app:srcCompat="@drawable/ic_baseline_color_lens_24"
+        android:contentDescription="@string/add_color" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

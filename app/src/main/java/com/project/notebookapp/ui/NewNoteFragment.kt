@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.project.notebookapp.R
+import com.project.notebookapp.databinding.FragmentColorPaletteModalBinding
 import com.project.notebookapp.databinding.FragmentNewNoteModalBinding
 
 class NewNoteFragment : Fragment() {
@@ -15,11 +17,10 @@ class NewNoteFragment : Fragment() {
     private var _binding: FragmentNewNoteModalBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentNewNoteModalBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -27,33 +28,32 @@ class NewNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.saveButton.setOnClickListener {
+            Toast.makeText(requireContext(), "Note Saved", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.shareButton.setOnClickListener {
+            Toast.makeText(requireContext(), "Note Shared", Toast.LENGTH_SHORT).show()
+        }
 
         binding.fabAddColour.setOnClickListener {
-            Toast.makeText(requireContext(), "select color", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_newNoteModal_to_colourModalSheet)
+            showColorPalette()
         }
-
-        binding.topAppBar.setNavigationOnClickListener {
-            Toast.makeText(requireContext(), "Return to Note Fragment", Toast.LENGTH_SHORT).show()
-        }
-
-        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
-            when(menuItem.itemId){
-                R.id.save -> {
-                    Toast.makeText(requireContext(), "New Note Save", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.share -> {
-                    Toast.makeText(requireContext(), "Note Shared", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                else ->{
-                    false
-                }
-            }
-
-        }
-
     }
 
+
+    private fun showColorPalette() {
+        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
+        val binding = FragmentColorPaletteModalBinding.inflate(LayoutInflater.from(requireContext()))
+        val bottomSheetView = binding.root
+        binding.btnCancel.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
+    }
 }

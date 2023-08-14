@@ -11,9 +11,6 @@
         android:label="fragment_note"
         tools:layout="@layout/fragment_note" >
         <action
-            android:id="@+id/action_noteFragment_to_aboutUsFragment"
-            app:destination="@id/aboutUsFragment" />
-        <action
             android:id="@+id/action_noteFragment_to_newNoteModal"
             app:destination="@id/newNoteModal" />
     </fragment>
@@ -23,17 +20,7 @@
         android:label="fragment_new_note_modal"
         tools:layout="@layout/fragment_new_note_modal" >
         <action
-            android:id="@+id/action_newNoteModal_to_colourModalSheet"
-            app:destination="@id/colourModalSheet" />
+            android:id="@+id/action_newNoteModal_to_noteFragment"
+            app:destination="@id/noteFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/aboutUsFragment"
-        android:name="com.project.notebookapp.ui.AboutUsFragment"
-        android:label="fragment_about_us"
-        tools:layout="@layout/fragment_about_us" />
-    <dialog
-        android:id="@+id/colourModalSheet"
-        android:name="com.project.notebookapp.ui.ColourModalSheet"
-        android:label="fragment_color_palette_modal"
-        tools:layout="@layout/fragment_color_palette_modal" />
 </navigation>

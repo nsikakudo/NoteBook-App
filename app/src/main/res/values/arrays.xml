@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="note_colors">
+        <item>@android:color/holo_orange_light</item>
+        <item>@android:color/darker_gray</item>
+        <item>@android:color/holo_orange_dark</item>
+        <item>@android:color/holo_green_dark</item>
+        <item>@android:color/holo_green_light</item>
+        <item>@android:color/holo_purple</item>
+        <item>@android:color/black</item>
+        <item>@android:color/holo_blue_bright</item>
+        <item>@android:color/holo_blue_dark</item>
+        <item>@android:color/holo_blue_light</item>
+        <item>@android:color/holo_red_dark</item>
+        <item>@android:color/holo_red_light</item>
+        <item>@color/yellow</item>
+        <item>@color/deep_yellow</item>
+        <item>@color/teal_700</item>
+        <item>@android:color/white</item>
+        <item>@color/purple_500</item>
+        <item>@color/purple_700</item>
+    </array>
+</resources>
