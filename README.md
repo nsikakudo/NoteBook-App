@@ -1,7 +1,7 @@
 # NoteBook-App
 > _What is the project?_ - The NoteBook App is a google Doc inspired app for users to jot down their notes with the help of Kotlin and Android Studio
 > 
-> Live demo [_Stream_](https://appetize.io/app/zcstuhohzywfawc5ieujz7rj5a?device=pixel4&osVersion=11.0&scale=75). 
+> Live demo [_Stream_](https://appetize.io/app/7gzpt2vqhpiviriscwdrxzznwu?device=pixel4&osVersion=11.0&scale=75). 
 
 ## General Information
 - The aim of this project is to help users. Such help will include jotting notes, and maybe in future adding daily task so users can track their performance daily.
