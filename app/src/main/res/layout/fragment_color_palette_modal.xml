@@ -34,7 +34,7 @@
             android:layout_marginHorizontal="8dp"
             android:layout_marginBottom="24dp"
             app:spectrum_autoPadding="true"
-            app:spectrum_columnCount="7"
+            app:spectrum_columnCount="6"
             app:spectrum_colors="@array/note_colors"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
