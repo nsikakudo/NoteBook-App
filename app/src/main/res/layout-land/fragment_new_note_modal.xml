@@ -2,16 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/container"
     tools:context=".ui.NewNoteFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/appBarLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="14dp"
         android:theme="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:layout_margin="0dp">
 
             <ImageButton
                 android:id="@+id/backButton"
@@ -76,7 +76,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-
     <EditText
         android:id="@+id/edtTitle"
         android:layout_width="0dp"
@@ -96,50 +95,49 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.781"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+         />
 
-
-    <ScrollView
-        android:id="@+id/scrollable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtTitle">
-
-        <EditText
-            android:id="@+id/edtNote"
+        <ScrollView
+            android:id="@+id/scrollable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:autofillHints="none"
-            android:background="@android:color/transparent"
-            android:gravity="top"
-            android:hint="@string/note"
-            android:inputType="textCapSentences|textMultiLine"
-            android:padding="10dp"
-            android:textColor="@color/black"
-            android:textIsSelectable="true"
-            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollable" />
+            app:layout_constraintTop_toBottomOf="@+id/edtTitle">
 
-    </ScrollView>
+    <EditText
+        android:id="@+id/edtNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:autofillHints="none"
+        android:background="@android:color/transparent"
+        android:gravity="top"
+        android:hint="@string/note"
+        android:inputType="textCapSentences|textMultiLine"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textIsSelectable="true"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollable"
+         />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddColour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="16dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:backgroundTint="@color/white"
-        android:contentDescription="@string/add_color"
-        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_color_lens_24" />
+        app:srcCompat="@drawable/ic_baseline_color_lens_24"
+        android:contentDescription="@string/add_color" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
