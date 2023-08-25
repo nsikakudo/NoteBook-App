@@ -128,7 +128,7 @@
         </ScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddColour"
+        android:id="@+id/addNoteFeatures"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
@@ -137,7 +137,7 @@
         android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_color_lens_24"
+        app:srcCompat="@drawable/baseline_more_vert_24"
         android:contentDescription="@string/add_color" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,15 +6,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.notebookapp.R
 import com.project.notebookapp.databinding.FragmentAboutUsBinding
 import com.project.notebookapp.databinding.FragmentNoteBinding
+import com.project.notebookapp.ui.adapter.NoteAdapter
+import com.project.notebookapp.ui.viewmodel.NoteViewModel
 
 class NoteFragment : Fragment() {
 
     private var _binding: FragmentNoteBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var rvAdapter: NoteAdapter
+
+    private lateinit var viewModel: NoteViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +35,23 @@ class NoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        val viewModel = NoteViewModel()
+////        binding.noteRecyclerView.adapter = rvAdapter
+//        val noteFragment = this
+//        viewModel.notes.observe(viewLifecycleOwner){
+//            binding.noteRecyclerView.apply {
+//                layoutManager = LinearLayoutManager(context)
+//                adapter = NoteAdapter( noteFragment)
+//            }
+//        }
+
+//        rvAdapter = binding.noteRecyclerView.adapter
+//        viewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+//
+//        val notes = viewModel.notes
+//        val adapter = NoteAdapter(notes)
+//        rvAdapter.adapter = adapter
 
         binding.btnAddNotes.setOnClickListener {
             findNavController().navigate(R.id.action_noteFragment_to_newNoteModal)

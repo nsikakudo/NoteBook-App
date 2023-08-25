@@ -25,5 +25,8 @@
     <string name="select_colour">select colour</string>
     <string name="add_color">add_color</string>
     <string name="btn_cancel">btn_cancel</string>
+    <string name="high">High</string>
+    <string name="medium">Medium</string>
+    <string name="low">Low</string>
 
 </resources>
