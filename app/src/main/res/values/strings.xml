@@ -28,5 +28,7 @@
     <string name="high">High</string>
     <string name="medium">Medium</string>
     <string name="low">Low</string>
+    <string name="add_colour">Add Colour</string>
+    <string name="add_priority_level">Add Priority Level</string>
 
 </resources>

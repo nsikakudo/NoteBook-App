@@ -6,6 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.NewNoteFragment">
+    
+    <View
+        android:id="@+id/transparent_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#66000000"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"/>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/appBarLayout"
@@ -76,7 +89,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-
     <EditText
         android:id="@+id/edtTitle"
         android:layout_width="0dp"
@@ -139,7 +151,69 @@
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/baseline_more_vert_24" />
+        app:srcCompat="@drawable/ic_baseline_add_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/white"
+        android:contentDescription="@string/add_color"
+        android:padding="16dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/addNoteFeatures"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_color_lens_24" />
+
+    <TextView
+        android:id="@+id/tvColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_colour"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:elevation="8dp"
+        android:background="@drawable/fab_text_bg"
+        android:paddingHorizontal="32dp"
+        android:paddingVertical="8dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@id/addColor"
+        app:layout_constraintTop_toTopOf="@id/addColor"
+        app:layout_constraintBottom_toBottomOf="@id/addColor"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addPriorityLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/white"
+        android:contentDescription="@string/add_color"
+        android:padding="16dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/addColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/baseline_align_horizontal_right_24" />
+
+    <TextView
+        android:id="@+id/tvPriority"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_priority_level"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:elevation="8dp"
+        android:background="@drawable/fab_text_bg"
+        android:paddingHorizontal="32dp"
+        android:paddingVertical="8dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@id/addPriorityLevel"
+        app:layout_constraintTop_toTopOf="@id/addPriorityLevel"
+        app:layout_constraintBottom_toBottomOf="@id/addPriorityLevel"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
