@@ -15,6 +15,7 @@ class NoteAdapter : ListAdapter<Note, NoteAdapter.NoteViewHolder>(NoteDiffUtil()
         fun bind(note: Note){
             binding.tvTopic.text = note.title
             binding.tvContent.text = note.content
+            binding.tvDate.text = note.timestampString
             binding.priorityLevel.text = note.priority.toString()
         }
     }
