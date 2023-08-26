@@ -12,7 +12,8 @@ class NoteViewModel: ViewModel() {
     val notes: MutableLiveData<List<Note>> = _notes
 
     private val noteList = mutableListOf<Note>()
-//    val addNotes: List<Note> get() = noteList
+
+    private val _noteList = MutableLiveData<List<Note>>()
 
     init {
         loadNotes()
@@ -20,6 +21,18 @@ class NoteViewModel: ViewModel() {
 
     fun addNote(note: Note) {
         noteList.add(note)
+
+        println("New Note Added: Title=${note.title}, Content=${note.content}," +
+                " TimeStamp=${note.timestamp.dayOfMonth}, Priority=${note.priority}")
+    }
+
+    fun deleteNote(note: Note) {
+        val updatedList = _noteList.value.orEmpty().toMutableList()
+        updatedList.remove(note)
+        _noteList.value = updatedList
+
+        println("Note Deleted: Title=${note.title}, Content=${note.content}, " +
+                " TimeStamp=${note.timestamp.dayOfMonth}, Priority=${note.priority}")
     }
 
     private fun loadNotes(){
@@ -87,8 +100,4 @@ class NoteViewModel: ViewModel() {
         )
     }
 
-//    fun addNote(note: Note) {
-//        _notes.value?.add(note)
-//        _notes.value = _notes.value
-//    }
 }

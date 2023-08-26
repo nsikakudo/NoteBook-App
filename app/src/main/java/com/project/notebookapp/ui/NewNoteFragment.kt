@@ -80,12 +80,17 @@ class NewNoteFragment : Fragment() {
         }
 
         binding.saveButton.setOnClickListener {
+            val title = binding.edtTitle.text.toString()
+            val content = binding.edtNote.text.toString()
+            val timestamp = LocalDateTime.now()
+            val priority = NotePriority.MEDIUM
 
-            val title = binding.edtTitle.toString()
-            val content = binding.edtNote.toString()
-            val priority = binding.addPriorityLevel
-            val newNote = Note(title, content, timestamp = LocalDateTime.now(), priority = NotePriority.MEDIUM)
-            viewModel.addNote(newNote)
+            if (title.isNotEmpty() && content.isNotEmpty()) {
+                val newNote = Note(title, content, timestamp, priority)
+                viewModel.addNote(newNote)
+                requireActivity().supportFragmentManager.popBackStack()
+//                findNavController().navigateUp()
+            }
             Toast.makeText(requireContext(), "Note Saved", Toast.LENGTH_SHORT).show()
         }
 

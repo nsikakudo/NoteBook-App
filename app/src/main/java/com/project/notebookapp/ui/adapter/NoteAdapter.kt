@@ -1,7 +1,6 @@
 package com.project.notebookapp.ui.adapter
 
 import com.project.notebookapp.data.Note
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.project.notebookapp.databinding.SearchNotesViewHolderBinding
 
-class NoteAdapter : ListAdapter<Note, NoteAdapter.NoteViewHolder>(NoteDiffUtil()) {
+class NoteAdapter(private val onDeleteListener: (Note) -> Unit) : ListAdapter<Note, NoteAdapter.NoteViewHolder>(NoteDiffUtil()) {
 
     class NoteViewHolder(private val binding: SearchNotesViewHolderBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(note: Note){
@@ -38,6 +37,11 @@ class NoteAdapter : ListAdapter<Note, NoteAdapter.NoteViewHolder>(NoteDiffUtil()
             return oldItem == newItem
         }
     }
+
+    fun getNoteAt(position: Int): Note {
+        return getItem(position)
+    }
+
 }
 
 
