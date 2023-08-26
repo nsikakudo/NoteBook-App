@@ -30,5 +30,6 @@
     <string name="low">Low</string>
     <string name="add_colour">Add Colour</string>
     <string name="add_priority_level">Add Priority Level</string>
+    <string name="this_the_title">This the title</string>
 
 </resources>
