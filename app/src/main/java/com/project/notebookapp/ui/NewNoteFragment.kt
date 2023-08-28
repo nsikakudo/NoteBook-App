@@ -1,8 +1,6 @@
 package com.project.notebookapp.ui
 
-import android.app.AlertDialog
-import android.app.Dialog
-import android.content.res.Configuration
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -30,8 +28,6 @@ class NewNoteFragment : Fragment() {
 
     private var _binding: FragmentNewNoteModalBinding? = null
     private val binding get() = _binding!!
-
-//    private val viewModel: NoteViewModel by viewModels()
 
     private val noteRepository: NoteRepository by inject()
 
@@ -68,25 +64,6 @@ class NewNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        viewModel = ViewModelProvider(requireActivity())[NoteViewModel::class.java]
-
-//        binding.saveButton.setOnClickListener {
-//            val title = binding.edtTitle.text.toString()
-//            val content = binding.edtNote.text.toString()
-//            val priority = when (binding.radioGroupPriority.checkedRadioButtonId) {
-//                R.id.radioHigh -> NotePriority.HIGH
-//                R.id.radioMedium -> NotePriority.MEDIUM
-//                R.id.radioLow -> NotePriority.LOW
-//                else -> NotePriority.MEDIUM
-//            }
-//
-//            if (title.isNotEmpty() && content.isNotEmpty()) {
-//                val newNote = Note(title, content, priority)
-//                viewModel.addNote(newNote)
-//                requireActivity().supportFragmentManager.popBackStack()
-//            }
-//        }
-
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -99,11 +76,11 @@ class NewNoteFragment : Fragment() {
             Toast.makeText(requireContext(), "Note Shared", Toast.LENGTH_SHORT).show()
         }
 
-        binding.addColor!!.setOnClickListener {
+        binding.addColor.setOnClickListener {
             showColorPalette()
         }
 
-        binding.addPriorityLevel!!.setOnClickListener {
+        binding.addPriorityLevel.setOnClickListener {
             showPriorityLevel()
         }
 
@@ -138,55 +115,64 @@ class NewNoteFragment : Fragment() {
     }
 
     private fun shrinkFab(){
-        binding.transparentBg!!.visibility = View.GONE
+        binding.transparentBg.visibility = View.GONE
         binding.addNoteFeatures.startAnimation(rotateAntiClockWiseFabAnim)
-        binding.addPriorityLevel?.startAnimation(toBottomFabAnim)
-        binding.addColor?.startAnimation(toBottomFabAnim)
-        binding.tvColor?.startAnimation(toBottomFabAnim)
-        binding.tvPriority?.startAnimation(toBottomFabAnim)
+        binding.addPriorityLevel.startAnimation(toBottomFabAnim)
+        binding.addColor.startAnimation(toBottomFabAnim)
+        binding.tvColor.startAnimation(toBottomFabAnim)
+        binding.tvPriority.startAnimation(toBottomFabAnim)
 
         isExpanded = !isExpanded
     }
 
     private fun expandFab(){
-        binding.transparentBg!!.visibility = View.VISIBLE
+        binding.transparentBg.visibility = View.VISIBLE
         binding.addNoteFeatures.startAnimation(rotateClockWiseFabAnim)
-        binding.addPriorityLevel?.startAnimation(fromBottomFabAnim)
-        binding.addColor?.startAnimation(fromBottomFabAnim)
-        binding.tvColor?.startAnimation(fromBottomFabAnim)
-        binding.tvPriority?.startAnimation(fromBottomFabAnim)
+        binding.addPriorityLevel.startAnimation(fromBottomFabAnim)
+        binding.addColor.startAnimation(fromBottomFabAnim)
+        binding.tvColor.startAnimation(fromBottomFabAnim)
+        binding.tvPriority.startAnimation(fromBottomFabAnim)
 
         isExpanded = !isExpanded
     }
 
     private fun showPriorityLevel(){
-            val currentOrientation = resources.configuration.orientation
+//            val currentOrientation = resources.configuration.orientation
+//
+//            val dialogBuilder: AlertDialog.Builder
+//            val binding: PriorityLevelModalBinding
+//            val dialog: Dialog
+//
+//            if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
+//                binding = PriorityLevelModalBinding.inflate(LayoutInflater.from(requireContext()))
+//                val bottomSheetDialog =
+//                    BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
+//                val bottomSheetView = binding.root
+//                bottomSheetView.setBackgroundResource(R.drawable.bottomsheet_shape)
+//
+//                binding.btnCancel.setOnClickListener { bottomSheetDialog.dismiss() }
+//                dialog = bottomSheetDialog
+//                bottomSheetDialog.setContentView(bottomSheetView)
+//                bottomSheetDialog.show()
+//            } else {
+//                dialogBuilder = AlertDialog.Builder(requireContext())
+//                binding = PriorityLevelModalBinding.inflate(LayoutInflater.from(requireContext()))
+//                val dialogView = binding.root
+//
+//                dialogBuilder.setView(dialogView)
+//                dialog = dialogBuilder.create()
+//
+//                binding.btnCancel.setOnClickListener { dialog.dismiss() }
+//            }
 
-            val dialogBuilder: AlertDialog.Builder
-            val binding: PriorityLevelModalBinding
-            val dialog: Dialog
-
-            if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
-                binding = PriorityLevelModalBinding.inflate(LayoutInflater.from(requireContext()))
-                val bottomSheetDialog =
-                    BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
-                val bottomSheetView = binding.root
-                bottomSheetView.setBackgroundResource(R.drawable.bottomsheet_shape)
-
-                binding.btnCancel!!.setOnClickListener { bottomSheetDialog.dismiss() }
-                dialog = bottomSheetDialog
-                bottomSheetDialog.setContentView(bottomSheetView)
-                bottomSheetDialog.show()
-            } else {
-                dialogBuilder = AlertDialog.Builder(requireContext())
-                binding = PriorityLevelModalBinding.inflate(LayoutInflater.from(requireContext()))
-                val dialogView = binding.root
-
-                dialogBuilder.setView(dialogView)
-                dialog = dialogBuilder.create()
-
-                binding.btnCancel!!.setOnClickListener { dialog.dismiss() }
-            }
+        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
+        val binding = PriorityLevelModalBinding.inflate(LayoutInflater.from(requireContext()))
+        val bottomSheetView = binding.root
+        binding.btnCancel.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
             val buttons = listOf(
                 binding.radioHigh,
                 binding.radioMedium,
@@ -203,40 +189,50 @@ class NewNoteFragment : Fragment() {
                     }
                 }
             }
-            dialog.show()
+//            dialog.show()
     }
+
 
     private fun showColorPalette() {
-
-        val currentOrientation = resources.configuration.orientation
-
-        if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
-            // Show bottom sheet dialog
-            val bottomSheetDialog =
-                BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
-            val binding = FragmentColorPaletteModalBinding.inflate(LayoutInflater.from(requireContext()))
-            val bottomSheetView = binding.root
-
-            bottomSheetView.setBackgroundResource(R.drawable.bottomsheet_shape)
-
-            binding.btnCancel.setOnClickListener {
-                bottomSheetDialog.dismiss()
-            }
-            bottomSheetDialog.setContentView(bottomSheetView)
-            bottomSheetDialog.show()
-        } else {
-            val dialogBuilder = AlertDialog.Builder(requireContext())
-            val binding = FragmentColorPaletteModalBinding.inflate(LayoutInflater.from(requireContext()))
-            val dialogView = binding.root
-
-            dialogBuilder.setView(dialogView)
-            val dialog = dialogBuilder.create()
-
-            binding.btnCancel.setOnClickListener {
-                dialog.dismiss()
-            }
-            dialog.show()
+        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
+        val binding = FragmentColorPaletteModalBinding.inflate(LayoutInflater.from(requireContext()))
+        val bottomSheetView = binding.root
+        binding.btnCancel.setOnClickListener {
+            bottomSheetDialog.dismiss()
         }
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
     }
+//    private fun showColorPalette() {
+//
+//        val currentOrientation = resources.configuration.orientation
+//
+//        if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
+//            val bottomSheetDialog =
+//                BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
+//            val binding = FragmentColorPaletteModalBinding.inflate(LayoutInflater.from(requireContext()))
+//            val bottomSheetView = binding.root
+//
+//            bottomSheetView.setBackgroundResource(R.drawable.bottomsheet_shape)
+//
+//            binding.btnCancel.setOnClickListener {
+//                bottomSheetDialog.dismiss()
+//            }
+//            bottomSheetDialog.setContentView(bottomSheetView)
+//            bottomSheetDialog.show()
+//        } else {
+//            val dialogBuilder = AlertDialog.Builder(requireContext())
+//            val binding = FragmentColorPaletteModalBinding.inflate(LayoutInflater.from(requireContext()))
+//            val dialogView = binding.root
+//
+//            dialogBuilder.setView(dialogView)
+//            val dialog = dialogBuilder.create()
+//
+//            binding.btnCancel.setOnClickListener {
+//                dialog.dismiss()
+//            }
+//            dialog.show()
+//        }
+//    }
 
 }

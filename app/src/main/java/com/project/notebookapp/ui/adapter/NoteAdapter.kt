@@ -3,12 +3,12 @@ package com.project.notebookapp.ui.adapter
 import com.project.notebookapp.data.Note
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.project.notebookapp.R
 import com.project.notebookapp.databinding.SearchNotesViewHolderBinding
-import com.project.notebookapp.utils.NotePriority
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -40,7 +40,11 @@ class NoteAdapter(private val listener: NoteClickListener) :
             tvDate.text = formattedTime
 
 //            priorityLevel.text = note.priority.toString()
-            setPriorityColor(note.priority)
+
+            val priority = note.priority // Get the priority from the note
+            priorityLevel.text = priority.toString()
+            priorityLevel.setTextColor(ContextCompat.getColor(itemView.context, priority.colorResId))
+
 
             root.setOnClickListener {
                 listener.editNote(note)
@@ -49,19 +53,10 @@ class NoteAdapter(private val listener: NoteClickListener) :
     }
 
     private fun formatDate(timestamp: Long): String {
-        val sdf = SimpleDateFormat("dd-MM-yyyy h:mma", Locale.getDefault())
+        val sdf = SimpleDateFormat("dd-MM-yyyy h:mm a", Locale.getDefault())
         val date = Date(timestamp)
         return sdf.format(date)
     }
-
-    private fun setPriorityColor(priority: NotePriority) {
-        when (priority) {
-            NotePriority.HIGH -> "High"
-            NotePriority.MEDIUM -> "Medium"
-            NotePriority.LOW -> "Low"
-        }
-    }
-
 
         companion object {
             private val NoteDiffUtil = object : DiffUtil.ItemCallback<Note>() {

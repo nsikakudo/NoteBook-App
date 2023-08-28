@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/_16sdp"
+    android:paddingStart="@dimen/_10sdp"
+    android:paddingEnd="@dimen/_10sdp"
     >
+
+    <ImageButton
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/ic_baseline_cancel_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/btn_cancel" />
 
     <RadioGroup
         android:id="@+id/radioGroupPriority"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,6 +33,7 @@
             android:checked="true"
             android:text="@string/high"
             android:textStyle="bold"
+            android:textColor="@color/skyBlue"
             />
 
         <RadioButton
@@ -30,6 +42,7 @@
             android:layout_height="wrap_content"
             android:text="@string/medium"
             android:textStyle="bold"
+            android:textColor="@color/deep_yellow"
             />
 
         <RadioButton
@@ -38,8 +51,8 @@
             android:layout_height="wrap_content"
             android:text="@string/low"
             android:textStyle="bold"
+            android:textColor="@color/red"
             />
     </RadioGroup>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

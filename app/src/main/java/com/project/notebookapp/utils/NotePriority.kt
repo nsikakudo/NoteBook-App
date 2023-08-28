@@ -1,7 +1,9 @@
 package com.project.notebookapp.utils
 
-enum class NotePriority {
-    HIGH,
-    MEDIUM,
-    LOW
+import com.project.notebookapp.R
+
+enum class NotePriority(val colorResId: Int) {
+    LOW(R.color.red),
+    MEDIUM(R.color.yellow),
+    HIGH(R.color.green)
 }

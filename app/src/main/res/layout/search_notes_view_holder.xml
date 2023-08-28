@@ -75,17 +75,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/about_us"
-                    android:src="@drawable/ic_baseline_date_range_24" />
+                    android:src="@drawable/ic_baseline_date_range_24"
+                    />
 
                 <TextView
                     android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="10dp"
                     tools:text="dd-mm-yy"
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

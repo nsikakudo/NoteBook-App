@@ -33,6 +33,7 @@
             android:checked="true"
             android:text="@string/high"
             android:textStyle="bold"
+            android:textColor="@color/skyBlue"
             />
 
         <RadioButton
@@ -41,6 +42,7 @@
             android:layout_height="wrap_content"
             android:text="@string/medium"
             android:textStyle="bold"
+            android:textColor="@color/deep_yellow"
             />
 
         <RadioButton
@@ -49,6 +51,7 @@
             android:layout_height="wrap_content"
             android:text="@string/low"
             android:textStyle="bold"
+            android:textColor="@color/red"
             />
     </RadioGroup>
 

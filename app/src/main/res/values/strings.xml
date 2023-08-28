@@ -32,4 +32,8 @@
     <string name="add_priority_level">Add Priority Level</string>
     <string name="this_the_title">This the title</string>
 
+    <string name="priority_low">Low Priority</string>
+    <string name="priority_medium">Medium Priority</string>
+    <string name="priority_high">High Priority</string>
+
 </resources>
