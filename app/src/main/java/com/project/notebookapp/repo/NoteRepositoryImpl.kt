@@ -43,7 +43,7 @@ class NoteRepositoryImpl: NoteRepository {
             )
     )
     override fun getAllNotes(): List<Note> {
-        return notes
+        return notes.toList()
     }
 
     override fun addNote(note: Note) {
