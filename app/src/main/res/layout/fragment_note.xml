@@ -26,7 +26,7 @@
         android:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="TODO" />
+        android:contentDescription="@string/about_us" />
 
 
     <androidx.appcompat.widget.SearchView
@@ -42,50 +42,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/noteRecyclerView"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView">
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        tools:listitem="@layout/search_notes_view_holder" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/noteRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:clipToPadding="false"
-            android:fadeScrollbars="true"
-            android:orientation="vertical"
-            android:overScrollMode="ifContentScrolls"
-            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            tools:listitem="@layout/search_notes_view_holder"
-            />
-
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/btnAddNotes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_anchorGravity="bottom|end"
-            android:backgroundTint="@color/black"
-            android:padding="5dp"
-            android:text="@string/add_note"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:elevation="5dp"
-            app:icon="@drawable/ic_baseline_add_24"
-            app:iconTint="@color/white"
-            />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btnAddNotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/black"
+        android:elevation="5dp"
+        android:padding="5dp"
+        android:text="@string/add_note"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:icon="@drawable/ic_baseline_add_24"
+        app:iconTint="@color/white"
+        app:layout_anchorGravity="bottom|end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

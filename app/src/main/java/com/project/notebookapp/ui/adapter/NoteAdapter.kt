@@ -6,43 +6,78 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.project.notebookapp.R
 import com.project.notebookapp.databinding.SearchNotesViewHolderBinding
+import com.project.notebookapp.utils.NotePriority
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-class NoteAdapter(private val onDeleteListener: (Note) -> Unit) : ListAdapter<Note, NoteAdapter.NoteViewHolder>(NoteDiffUtil()) {
+class NoteAdapter(private val listener: NoteClickListener) :
+    ListAdapter<Note, NoteAdapter.NoteViewHolder>(NoteDiffUtil) {
 
-    class NoteViewHolder(private val binding: SearchNotesViewHolderBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(note: Note){
-            binding.tvTopic.text = note.title
-            binding.tvContent.text = note.content
-            binding.tvDate.text = note.timestampString
-            binding.priorityLevel.text = note.priority.toString()
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
+            return NoteViewHolder(
+                SearchNotesViewHolderBinding.bind(
+                    LayoutInflater.from(parent.context).inflate(
+                        R.layout.search_notes_view_holder, parent, false
+                    )
+                )
+            )
+        }
+
+        override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
+            holder.bind(getItem(position))
+        }
+
+    inner class NoteViewHolder(private val binding: SearchNotesViewHolderBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(note: Note) = with(binding) {
+            tvTopic.text = note.title
+            tvContent.text = note.content
+
+            val formattedTime = formatDate(note.timestamp)
+            tvDate.text = formattedTime
+
+//            priorityLevel.text = note.priority.toString()
+            setPriorityColor(note.priority)
+
+            root.setOnClickListener {
+                listener.editNote(note)
+            }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        val binding = SearchNotesViewHolderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NoteViewHolder(binding)
+    private fun formatDate(timestamp: Long): String {
+        val sdf = SimpleDateFormat("dd-MM-yyyy h:mma", Locale.getDefault())
+        val date = Date(timestamp)
+        return sdf.format(date)
     }
 
-    override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        val note = getItem(position)
-        holder.bind(note)
-    }
-
-    private class NoteDiffUtil : DiffUtil.ItemCallback<Note>() {
-        override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
-            return oldItem === newItem
-        }
-        override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
-            return oldItem == newItem
+    private fun setPriorityColor(priority: NotePriority) {
+        when (priority) {
+            NotePriority.HIGH -> "High"
+            NotePriority.MEDIUM -> "Medium"
+            NotePriority.LOW -> "Low"
         }
     }
 
-    fun getNoteAt(position: Int): Note {
-        return getItem(position)
+
+        companion object {
+            private val NoteDiffUtil = object : DiffUtil.ItemCallback<Note>() {
+                override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
+                    return oldItem.timestamp == newItem.timestamp
+                }
+
+                override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
+                    return oldItem == newItem
+                }
+            }
+        }
+
     }
 
-}
+
 
 
 

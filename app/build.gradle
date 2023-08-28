@@ -1,7 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+//    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.devtools.ksp'
 }
 
 android {
@@ -48,25 +50,24 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    implementation("androidx.recyclerview:recyclerview:1.3.1")
-    // For control over item selection of both touch and mouse driven selection
-    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
 
-    //Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
-
-    // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
-    // LiveData
+    // ViewModel & LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
 
-    def room_version = "2.5.2"
+    // Room
+    ksp("androidx.room:room-compiler:2.5.2")
+    implementation("androidx.room:room-ktx:2.5.2")
+    implementation("androidx.room:room-runtime:2.5.2")
+    androidTestImplementation("androidx.room:room-testing:2.5.2")
 
-    implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
+    // Koin
+    implementation("io.insert-koin:koin-android:3.4.0")
 
-    // To use Kotlin annotation processing tool (kapt)
-    kapt("androidx.room:room-compiler:$room_version")
+    // Koin Tests
+    testImplementation("io.insert-koin:koin-test:3.4.0")
+    testImplementation("io.insert-koin:koin-test-junit4:3.4.0")
+    testImplementation("org.mockito:mockito-inline:4.8.0")
 
     //responsive size
     implementation "com.intuit.sdp:sdp-android:1.1.0"
