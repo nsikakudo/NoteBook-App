@@ -39,14 +39,11 @@ class NoteAdapter(private val listener: NoteClickListener) :
             val formattedTime = formatDate(note.timestamp)
             tvDate.text = formattedTime
 
-//            priorityLevel.text = note.priority.toString()
-
             val priority = note.priority // Get the priority from the note
             priorityLevel.text = priority.toString()
             priorityLevel.setTextColor(ContextCompat.getColor(itemView.context, priority.colorResId))
 
-
-            root.setOnClickListener {
+            cardView.setOnClickListener {
                 listener.editNote(note)
             }
         }
@@ -61,7 +58,7 @@ class NoteAdapter(private val listener: NoteClickListener) :
         companion object {
             private val NoteDiffUtil = object : DiffUtil.ItemCallback<Note>() {
                 override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
-                    return oldItem.timestamp == newItem.timestamp
+                    return oldItem == newItem
                 }
 
                 override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
@@ -69,10 +66,4 @@ class NoteAdapter(private val listener: NoteClickListener) :
                 }
             }
         }
-
     }
-
-
-
-
-

@@ -6,14 +6,7 @@ import com.project.notebookapp.ui.viewmodel.NoteViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-
-//val appModule = module {
-//    single<NoteRepository> { NoteRepositoryImpl() }
-//    viewModel { NoteViewModel(get()) }
-//}
-
 val appModule = module {
     single<NoteRepository> { NoteRepositoryImpl() }
     viewModel { (noteRepository: NoteRepository) -> NoteViewModel(noteRepository) }
 }
-

@@ -22,20 +22,20 @@ class NoteRepositoryImpl: NoteRepository {
                 NotePriority.LOW
             ),
             Note(
-                "Ars Technica",
+                "The Priest",
                 "Ars Technica provides essential tech news of the moment." +
                         " It provides the top news and commentary for technology's leaders.",
                 System.currentTimeMillis(),
                 NotePriority.MEDIUM
             ),
-            Note("Techmeme",
+            Note("ThunderStorm Attack In Miami",
                 "Techmeme provides essential tech news of the moment." +
                         " It provides the top news and commentary for technology's leaders.",
                 System.currentTimeMillis(),
                 NotePriority.HIGH
             ),
             Note(
-                "Ars Technica",
+                "The Hidden Truth In Antarctica",
                 "Ars Technica provides essential tech news of the moment." +
                         " It provides the top news and commentary for technology's leaders.",
                 System.currentTimeMillis(),
@@ -55,6 +55,5 @@ class NoteRepositoryImpl: NoteRepository {
         notes.remove(note)
         Log.d("NoteRepositoryImpl", "Note deleted: $note")
     }
-
 
 }

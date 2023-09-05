@@ -6,13 +6,13 @@ import androidx.lifecycle.ViewModel
 import com.project.notebookapp.data.Note
 import com.project.notebookapp.repo.NoteRepository
 
+
 class NoteViewModel(
     private val noteRepository: NoteRepository
 ): ViewModel() {
 
     private val _notes = MutableLiveData<List<Note>>()
     val notes: LiveData<List<Note>> get() = _notes
-
     init {
         getAllNotes()
     }
@@ -29,6 +29,10 @@ class NoteViewModel(
     fun deleteNote(note: Note) {
         noteRepository.deleteNote(note)
         getAllNotes()
+    }
+
+    fun getTotalNotes(): Int {
+        return noteRepository.getAllNotes().size.plus(1)
     }
 
 }

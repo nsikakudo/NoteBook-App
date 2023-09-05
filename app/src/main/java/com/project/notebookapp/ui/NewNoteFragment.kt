@@ -1,7 +1,10 @@
 package com.project.notebookapp.ui
 
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +12,8 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
@@ -94,6 +99,9 @@ class NewNoteFragment : Fragment() {
     }
 
     private fun saveNote() {
+        val totalNotes = viewModel.getTotalNotes()
+        showNotification(totalNotes)
+
         val title = binding.edtTitle.text.toString()
         val content = binding.edtNote.text.toString()
         val timestamp = System.currentTimeMillis()
@@ -112,6 +120,83 @@ class NewNoteFragment : Fragment() {
 
     private fun checkText(title: String, content: String): Boolean {
         return title.isNotEmpty() && content.isNotEmpty()
+    }
+
+//    private fun showNotification(totalNotes: Int) {
+//        val channelId = "note_channel" // Use the same channel ID as created earlier
+//        val notificationId = 3
+//        val builder = NotificationCompat.Builder(requireContext(), channelId)
+//            .setSmallIcon(R.drawable.ic_notification)
+//            .setContentTitle("Total Notes")
+//            .setContentText("You have $totalNotes notes.")
+//            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+//
+//    val notificationManager = NotificationManagerCompat.from(requireContext())
+//
+//    try {
+//        if (notificationManager.areNotificationsEnabled()) {
+//            notificationManager.notify(notificationId, builder.build())
+//        } else {
+//            val intent = Intent()
+//            intent.action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+//            intent.putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
+//            startActivity(intent)
+//
+////            Snackbar.make(binding.root, "Notifications are disabled. Please enable them in settings.", Snackbar.LENGTH_LONG)
+////                .apply {
+////                    setAction("Enable") {
+////                        requestNotificationPermission()
+////                    }
+////                        .show()
+////                }
+//        }
+//    } catch (e: SecurityException) {
+//        Toast.makeText(requireContext(),"Permission required for notifications.", Toast.LENGTH_SHORT).show()
+//    }
+//    }
+
+    private fun showNotification(totalNotes: Int) {
+        val channelId = "note_channel" // Use the same channel ID as created earlier
+        val notificationId = 3
+        val builder = NotificationCompat.Builder(requireContext(), channelId)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle("Total Notes")
+            .setContentText("You have $totalNotes notes.")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        val notificationManager = NotificationManagerCompat.from(requireContext())
+
+        try {
+            if (notificationManager.areNotificationsEnabled()) {
+                notificationManager.notify(notificationId, builder.build())
+            } else {
+                requestNotificationPermission()
+
+//                Snackbar.make(binding.root, "Notifications are disabled. Please enable them in settings.", Snackbar.LENGTH_LONG)
+//                .apply {
+//                    setAction("Enable") {
+//                        requestNotificationPermission()
+//                    }
+//                        .show()
+//                }
+            }
+        } catch (e: SecurityException) {
+            Toast.makeText(requireContext(), "Permission required for notifications.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun requestNotificationPermission() {
+        try {
+            val notificationManager = NotificationManagerCompat.from(requireContext())
+            if (!notificationManager.areNotificationsEnabled()) {
+                val intent = Intent()
+                intent.action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                intent.putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
+                startActivity(intent)
+            }
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(requireContext(),"Notification settings not found.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun shrinkFab(){
@@ -137,34 +222,6 @@ class NewNoteFragment : Fragment() {
     }
 
     private fun showPriorityLevel(){
-//            val currentOrientation = resources.configuration.orientation
-//
-//            val dialogBuilder: AlertDialog.Builder
-//            val binding: PriorityLevelModalBinding
-//            val dialog: Dialog
-//
-//            if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
-//                binding = PriorityLevelModalBinding.inflate(LayoutInflater.from(requireContext()))
-//                val bottomSheetDialog =
-//                    BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
-//                val bottomSheetView = binding.root
-//                bottomSheetView.setBackgroundResource(R.drawable.bottomsheet_shape)
-//
-//                binding.btnCancel.setOnClickListener { bottomSheetDialog.dismiss() }
-//                dialog = bottomSheetDialog
-//                bottomSheetDialog.setContentView(bottomSheetView)
-//                bottomSheetDialog.show()
-//            } else {
-//                dialogBuilder = AlertDialog.Builder(requireContext())
-//                binding = PriorityLevelModalBinding.inflate(LayoutInflater.from(requireContext()))
-//                val dialogView = binding.root
-//
-//                dialogBuilder.setView(dialogView)
-//                dialog = dialogBuilder.create()
-//
-//                binding.btnCancel.setOnClickListener { dialog.dismiss() }
-//            }
-
         val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
         val binding = PriorityLevelModalBinding.inflate(LayoutInflater.from(requireContext()))
         val bottomSheetView = binding.root
@@ -189,9 +246,7 @@ class NewNoteFragment : Fragment() {
                     }
                 }
             }
-//            dialog.show()
     }
-
 
     private fun showColorPalette() {
         val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
@@ -203,36 +258,14 @@ class NewNoteFragment : Fragment() {
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
     }
-//    private fun showColorPalette() {
-//
-//        val currentOrientation = resources.configuration.orientation
-//
-//        if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
-//            val bottomSheetDialog =
-//                BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
-//            val binding = FragmentColorPaletteModalBinding.inflate(LayoutInflater.from(requireContext()))
-//            val bottomSheetView = binding.root
-//
-//            bottomSheetView.setBackgroundResource(R.drawable.bottomsheet_shape)
-//
-//            binding.btnCancel.setOnClickListener {
-//                bottomSheetDialog.dismiss()
-//            }
-//            bottomSheetDialog.setContentView(bottomSheetView)
-//            bottomSheetDialog.show()
-//        } else {
-//            val dialogBuilder = AlertDialog.Builder(requireContext())
-//            val binding = FragmentColorPaletteModalBinding.inflate(LayoutInflater.from(requireContext()))
-//            val dialogView = binding.root
-//
-//            dialogBuilder.setView(dialogView)
-//            val dialog = dialogBuilder.create()
-//
-//            binding.btnCancel.setOnClickListener {
-//                dialog.dismiss()
-//            }
-//            dialog.show()
-//        }
-//    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.notes.removeObservers(viewLifecycleOwner)
+        fromBottomFabAnim.cancel()
+        toBottomFabAnim.cancel()
+        rotateClockWiseFabAnim.cancel()
+        rotateAntiClockWiseFabAnim.cancel()
+    }
 
 }

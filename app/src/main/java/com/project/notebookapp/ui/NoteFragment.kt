@@ -101,13 +101,18 @@ class NoteFragment : Fragment() {
 
     }
 
-
     private fun showAboutDialog() {
         val binding = FragmentAboutUsBinding.inflate(LayoutInflater.from(requireContext()))
         val builder = AlertDialog.Builder(requireContext())
             .setView(binding.root)
         val dialog = builder.create()
         dialog.show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.notes.removeObservers(viewLifecycleOwner)
+        binding.noteRecyclerView.adapter = null
     }
 
 }

@@ -50,6 +50,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
+    //WorkManger
+    implementation "androidx.work:work-runtime:2.8.1"
 
     // ViewModel & LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
