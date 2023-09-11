@@ -1,38 +1,33 @@
 package com.project.notebookapp.ui.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.project.notebookapp.data.Note
 import com.project.notebookapp.repo.NoteRepository
+import kotlinx.coroutines.launch
 
 
 class NoteViewModel(
     private val noteRepository: NoteRepository
 ): ViewModel() {
 
-    private val _notes = MutableLiveData<List<Note>>()
-    val notes: LiveData<List<Note>> get() = _notes
-    init {
-        getAllNotes()
+    val allNotes: LiveData<List<Note>> = noteRepository.allNotes
+
+    fun insertOrUpdate(note: Note) {
+        viewModelScope.launch {
+            noteRepository.insertOrUpdate(note)
+        }
     }
 
-    private fun getAllNotes() {
-        _notes.value = noteRepository.getAllNotes()
+    fun delete(note: Note) {
+        viewModelScope.launch {
+            noteRepository.delete(note)
+        }
     }
 
-    fun addNote(note: Note) {
-        noteRepository.addNote(note)
-        getAllNotes()
-    }
-
-    fun deleteNote(note: Note) {
-        noteRepository.deleteNote(note)
-        getAllNotes()
-    }
-
-    fun getTotalNotes(): Int {
-        return noteRepository.getAllNotes().size.plus(1)
+    fun getNoteById(noteId: Long): LiveData<Note> {
+        return noteRepository.getNoteById(noteId)
     }
 
 }

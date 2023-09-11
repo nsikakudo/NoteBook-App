@@ -21,4 +21,14 @@ class MainActivity : AppCompatActivity() {
         as NavHostFragment
         navController = navHostFragment.navController
     }
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
+        if (currentFragment is NewNoteFragment) {
+            (currentFragment as? NewNoteFragment)?.onBackPressed()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
 }

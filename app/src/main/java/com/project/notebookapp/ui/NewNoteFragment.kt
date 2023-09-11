@@ -1,6 +1,5 @@
 package com.project.notebookapp.ui
 
-
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
@@ -14,9 +13,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.snackbar.Snackbar
 import com.project.notebookapp.R
 import com.project.notebookapp.data.Note
 import com.project.notebookapp.databinding.FragmentColorPaletteModalBinding
@@ -58,6 +55,8 @@ class NewNoteFragment : Fragment() {
         AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_anti_clock_wise)
     }
 
+    private var existingNote: Note? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,12 +68,25 @@ class NewNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.backButton.setOnClickListener {
-            findNavController().navigateUp()
+        val noteId = arguments?.getLong("noteId", -1L) ?: -1L
+
+        if (noteId != -1L) {
+            viewModel.getNoteById(noteId).observe(viewLifecycleOwner) { note ->
+                note?.let {
+                    existingNote = it
+                    binding.edtTitle.setText(it.title)
+                    binding.edtNote.setText(it.content)
+                    selectedPriority = it.priority
+                    binding.editModeText.visibility = View.VISIBLE
+                }
+            }
+        } else {
+            existingNote = null
+            binding.editModeText.visibility = View.INVISIBLE
         }
 
         binding.saveButton.setOnClickListener {
-            saveNote()
+            onSaveButtonClick()
         }
 
         binding.shareButton.setOnClickListener {
@@ -96,72 +108,52 @@ class NewNoteFragment : Fragment() {
                 expandFab()
             }
         }
+
+        binding.transparentBg.setOnClickListener {
+            if (isExpanded) {
+                shrinkFab()
+            }
+        }
+
     }
 
-    private fun saveNote() {
-        val totalNotes = viewModel.getTotalNotes()
-        showNotification(totalNotes)
-
+    private fun onSaveButtonClick() {
         val title = binding.edtTitle.text.toString()
         val content = binding.edtNote.text.toString()
         val timestamp = System.currentTimeMillis()
 
-        if (checkText(title, content)) {
-            val note = Note(title, content, timestamp, selectedPriority)
-
-            viewModel.addNote(note)
-            findNavController().navigate(NewNoteFragmentDirections.actionNewNoteModalToNoteFragment())
-            Snackbar.make(binding.root, "Note saved successfully", Snackbar.LENGTH_SHORT).show()
-
+        if (title.isNotEmpty() && content.isNotEmpty()) {
+            if (existingNote != null) {
+                val updatedNote = existingNote!!.copy(
+                    title = title,
+                    content = content,
+                    timestamp = timestamp,
+                    priority = selectedPriority
+                )
+                viewModel.insertOrUpdate(updatedNote)
+            } else {
+                val newNote = Note(
+                    title = title,
+                    content = content,
+                    timestamp = System.currentTimeMillis(),
+                    priority = selectedPriority
+                )
+                viewModel.insertOrUpdate(newNote)
+                showNotification()
+            }
+            requireActivity().onBackPressed()
         } else {
-            Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun checkText(title: String, content: String): Boolean {
-        return title.isNotEmpty() && content.isNotEmpty()
-    }
-
-//    private fun showNotification(totalNotes: Int) {
-//        val channelId = "note_channel" // Use the same channel ID as created earlier
-//        val notificationId = 3
-//        val builder = NotificationCompat.Builder(requireContext(), channelId)
-//            .setSmallIcon(R.drawable.ic_notification)
-//            .setContentTitle("Total Notes")
-//            .setContentText("You have $totalNotes notes.")
-//            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-//
-//    val notificationManager = NotificationManagerCompat.from(requireContext())
-//
-//    try {
-//        if (notificationManager.areNotificationsEnabled()) {
-//            notificationManager.notify(notificationId, builder.build())
-//        } else {
-//            val intent = Intent()
-//            intent.action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
-//            intent.putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
-//            startActivity(intent)
-//
-////            Snackbar.make(binding.root, "Notifications are disabled. Please enable them in settings.", Snackbar.LENGTH_LONG)
-////                .apply {
-////                    setAction("Enable") {
-////                        requestNotificationPermission()
-////                    }
-////                        .show()
-////                }
-//        }
-//    } catch (e: SecurityException) {
-//        Toast.makeText(requireContext(),"Permission required for notifications.", Toast.LENGTH_SHORT).show()
-//    }
-//    }
-
-    private fun showNotification(totalNotes: Int) {
-        val channelId = "note_channel" // Use the same channel ID as created earlier
+    private fun showNotification() {
+        val channelId = "note_channel"
         val notificationId = 3
         val builder = NotificationCompat.Builder(requireContext(), channelId)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle("Total Notes")
-            .setContentText("You have $totalNotes notes.")
+            .setContentTitle("Notes Saved Successfully")
+            .setContentText("You added a new note")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         val notificationManager = NotificationManagerCompat.from(requireContext())
@@ -171,14 +163,6 @@ class NewNoteFragment : Fragment() {
                 notificationManager.notify(notificationId, builder.build())
             } else {
                 requestNotificationPermission()
-
-//                Snackbar.make(binding.root, "Notifications are disabled. Please enable them in settings.", Snackbar.LENGTH_LONG)
-//                .apply {
-//                    setAction("Enable") {
-//                        requestNotificationPermission()
-//                    }
-//                        .show()
-//                }
             }
         } catch (e: SecurityException) {
             Toast.makeText(requireContext(), "Permission required for notifications.", Toast.LENGTH_SHORT).show()
@@ -221,31 +205,24 @@ class NewNoteFragment : Fragment() {
         isExpanded = !isExpanded
     }
 
-    private fun showPriorityLevel(){
+    private fun showPriorityLevel() {
         val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
         val binding = PriorityLevelModalBinding.inflate(LayoutInflater.from(requireContext()))
         val bottomSheetView = binding.root
+
+        binding.radioGroupPriority.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.radioHigh -> selectedPriority = NotePriority.HIGH
+                R.id.radioMedium -> selectedPriority = NotePriority.MEDIUM
+                R.id.radioLow -> selectedPriority = NotePriority.LOW
+            }
+        }
+
         binding.btnCancel.setOnClickListener {
             bottomSheetDialog.dismiss()
         }
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
-            val buttons = listOf(
-                binding.radioHigh,
-                binding.radioMedium,
-                binding.radioLow
-            )
-
-            for (button in buttons) {
-                button.setOnClickListener {
-                    selectedPriority = when (button.id) {
-                        R.id.radioHigh -> NotePriority.HIGH
-                        R.id.radioMedium -> NotePriority.MEDIUM
-                        R.id.radioLow -> NotePriority.LOW
-                        else -> NotePriority.HIGH
-                    }
-                }
-            }
     }
 
     private fun showColorPalette() {
@@ -258,14 +235,18 @@ class NewNoteFragment : Fragment() {
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
     }
+    fun onBackPressed() {
+        if (isExpanded) {
+            shrinkFab()
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        viewModel.notes.removeObservers(viewLifecycleOwner)
+        viewModel.allNotes.removeObservers(viewLifecycleOwner)
         fromBottomFabAnim.cancel()
         toBottomFabAnim.cancel()
         rotateClockWiseFabAnim.cancel()
         rotateAntiClockWiseFabAnim.cancel()
     }
-
 }

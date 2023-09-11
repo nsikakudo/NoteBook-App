@@ -19,8 +19,10 @@
         android:name="com.project.notebookapp.ui.NewNoteFragment"
         android:label="fragment_new_note_modal"
         tools:layout="@layout/fragment_new_note_modal" >
+
         <action
             android:id="@+id/action_newNoteModal_to_noteFragment"
             app:destination="@id/noteFragment" />
+
     </fragment>
 </navigation>

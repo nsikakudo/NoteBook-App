@@ -27,7 +27,8 @@ class NoteAdapter(private val listener: NoteClickListener) :
         }
 
         override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-            holder.bind(getItem(position))
+            val note = getItem(position)
+            holder.bind(note)
         }
 
     inner class NoteViewHolder(private val binding: SearchNotesViewHolderBinding) :
@@ -39,7 +40,7 @@ class NoteAdapter(private val listener: NoteClickListener) :
             val formattedTime = formatDate(note.timestamp)
             tvDate.text = formattedTime
 
-            val priority = note.priority // Get the priority from the note
+            val priority = note.priority
             priorityLevel.text = priority.toString()
             priorityLevel.setTextColor(ContextCompat.getColor(itemView.context, priority.colorResId))
 
@@ -58,7 +59,7 @@ class NoteAdapter(private val listener: NoteClickListener) :
         companion object {
             private val NoteDiffUtil = object : DiffUtil.ItemCallback<Note>() {
                 override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
-                    return oldItem == newItem
+                    return oldItem.timestamp == newItem.timestamp
                 }
 
                 override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {

@@ -1,59 +1,27 @@
 package com.project.notebookapp.repo
 
-import android.util.Log
+import androidx.lifecycle.LiveData
 import com.project.notebookapp.data.Note
-import com.project.notebookapp.utils.NotePriority
+import com.project.notebookapp.data.NoteDao
 
-class NoteRepositoryImpl: NoteRepository {
+class NoteRepositoryImpl(private val noteDao: NoteDao): NoteRepository {
 
-    private val notes: MutableList<Note> = mutableListOf(
+    override val allNotes: LiveData<List<Note>> = noteDao.getAllNotes()
 
-        Note("Techmeme",
-                "Techmeme provides essential tech news of the moment." +
-                        " It provides the top news and commentary for technology's leaders.",
-                System.currentTimeMillis(),
-                NotePriority.HIGH
-            ),
-            Note(
-                "Ars Technica",
-                "Ars Technica provides essential tech news of the moment." +
-                        " It provides the top news and commentary for technology's leaders.",
-                System.currentTimeMillis(),
-                NotePriority.LOW
-            ),
-            Note(
-                "The Priest",
-                "Ars Technica provides essential tech news of the moment." +
-                        " It provides the top news and commentary for technology's leaders.",
-                System.currentTimeMillis(),
-                NotePriority.MEDIUM
-            ),
-            Note("ThunderStorm Attack In Miami",
-                "Techmeme provides essential tech news of the moment." +
-                        " It provides the top news and commentary for technology's leaders.",
-                System.currentTimeMillis(),
-                NotePriority.HIGH
-            ),
-            Note(
-                "The Hidden Truth In Antarctica",
-                "Ars Technica provides essential tech news of the moment." +
-                        " It provides the top news and commentary for technology's leaders.",
-                System.currentTimeMillis(),
-                NotePriority.LOW
-            )
-    )
-    override fun getAllNotes(): List<Note> {
-        return notes.toList()
+    override suspend fun insertOrUpdate(note: Note) {
+        noteDao.insertOrUpdate(note)
     }
 
-    override fun addNote(note: Note) {
-        notes.add(note)
-        Log.d("NoteRepositoryImpl", "Note added: $note")
+    override suspend fun delete(note: Note) {
+        noteDao.delete(note)
     }
 
-    override fun deleteNote(note: Note) {
-        notes.remove(note)
-        Log.d("NoteRepositoryImpl", "Note deleted: $note")
+    override fun getNoteById(noteId: Long): LiveData<Note> {
+        return noteDao.getNoteById(noteId)
+    }
+    override fun getNumberOfNotes(): Int {
+        return noteDao.getCount()
     }
 
 }
+

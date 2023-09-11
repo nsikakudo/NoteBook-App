@@ -64,3 +64,4 @@ class BaseApplication: Application() {
         WorkManager.getInstance(this).cancelAllWork()
     }
 }
+

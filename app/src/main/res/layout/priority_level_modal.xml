@@ -33,7 +33,7 @@
             android:checked="true"
             android:text="@string/high"
             android:textStyle="bold"
-            android:textColor="@color/skyBlue"
+            android:textColor="@color/blue"
             />
 
         <RadioButton

@@ -16,8 +16,8 @@ class NoteSaveWorker(context: Context, workerParams: WorkerParameters,
     private val noteRepository: NoteRepository by inject()
     override fun doWork(): Result {
         return try {
-            val totalNotes = noteRepository.getAllNotes().size
-            showSuccessNotification(totalNotes)
+            val numberOfNotes = noteRepository.getNumberOfNotes()
+            showSuccessNotification(numberOfNotes)
             Result.success()
 
         } catch (e: Exception) {
@@ -26,17 +26,18 @@ class NoteSaveWorker(context: Context, workerParams: WorkerParameters,
         }
     }
 
-    private fun showSuccessNotification(totalNotes: Int) {
-        val notification = NotificationCompat.Builder(applicationContext, NOTE_SAVE_CHANNEL_ID)
-            .setContentTitle("Notes Saved Successfully")
-            .setContentText("Total Available Notes: $totalNotes")
+    private fun showSuccessNotification(numberOfNotes: Int) {
+
+        val notificationBuilder = NotificationCompat.Builder(applicationContext, NOTE_SAVE_CHANNEL_ID)
+            .setContentTitle("Note Update")
+            .setContentText("You have $numberOfNotes notes.")
             .setSmallIcon(R.drawable.ic_notification)
             .build()
-        Log.d("MYtAG", "SUCCESSFUL!!!")
 
+        Log.d("MYtAG", "SUCCESSFUL!!!")
         val notificationManager =
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(NOTIFICATION_ID_SUCCESS, notification)
+        notificationManager.notify(NOTIFICATION_ID_SUCCESS, notificationBuilder)
     }
 
     private fun showErrorNotification() {
@@ -53,7 +54,7 @@ class NoteSaveWorker(context: Context, workerParams: WorkerParameters,
     }
 
     companion object {
-        const val NOTE_SAVE_CHANNEL_ID = "channel_id"
+        const val NOTE_SAVE_CHANNEL_ID = "note_channel"
         private const val NOTIFICATION_ID_SUCCESS = 1
         private const val NOTIFICATION_ID_ERROR = 2
     }

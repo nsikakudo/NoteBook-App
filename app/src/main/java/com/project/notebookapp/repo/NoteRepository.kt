@@ -1,10 +1,13 @@
 package com.project.notebookapp.repo
 
+import androidx.lifecycle.LiveData
 import com.project.notebookapp.data.Note
 
 interface NoteRepository {
 
-    fun getAllNotes(): List<Note>
-    fun addNote(note: Note)
-    fun deleteNote(note: Note)
+    val allNotes: LiveData<List<Note>>
+    suspend fun insertOrUpdate(note: Note)
+    suspend fun delete(note: Note)
+    fun getNoteById(noteId: Long): LiveData<Note>
+    fun getNumberOfNotes(): Int
 }

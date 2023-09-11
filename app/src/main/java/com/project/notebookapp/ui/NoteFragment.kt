@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,14 +33,7 @@ class NoteFragment : Fragment() {
 
     private val viewModel: NoteViewModel by viewModel { parametersOf(noteRepository)  }
 
-    private val rvAdapter: NoteAdapter by lazy {
-        NoteAdapter(object : NoteClickListener {
-            override fun editNote(note: Note) {
-                findNavController().navigate(NoteFragmentDirections.actionNoteFragmentToNewNoteModal())
-            }
-        })
-    }
-
+    private lateinit var rvAdapter: NoteAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,7 +46,20 @@ class NoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.notes.observe(viewLifecycleOwner) { notes ->
+        rvAdapter = NoteAdapter(object : NoteClickListener {
+            override fun editNote(note: Note) {
+                val bundle = bundleOf("noteId" to note.id)
+                findNavController().navigate(
+                    R.id.action_noteFragment_to_newNoteModal,
+                    bundle
+                )
+            }
+        })
+
+        val recyclerView = binding.noteRecyclerView
+        recyclerView.adapter = rvAdapter
+
+        viewModel.allNotes.observe(viewLifecycleOwner){ notes ->
             rvAdapter.submitList(notes)
         }
 
@@ -84,11 +91,11 @@ class NoteFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val note = rvAdapter.currentList[position]
-                viewModel.deleteNote(note)
+                viewModel.delete(note)
                 Snackbar.make(binding.root, "Note deleted successfully", Snackbar.LENGTH_LONG)
                     .apply {
                         setAction("Undo") {
-                            viewModel.addNote(note)
+                            viewModel.insertOrUpdate(note)
                         }
                             .show()
                     }
@@ -111,7 +118,7 @@ class NoteFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        viewModel.notes.removeObservers(viewLifecycleOwner)
+        viewModel.allNotes.removeObservers(viewLifecycleOwner)
         binding.noteRecyclerView.adapter = null
     }
 
