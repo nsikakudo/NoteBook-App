@@ -71,26 +71,6 @@ class NoteFragment : Fragment() {
             rvAdapter.submitList(notes)
         }
 
-//
-//        displayRecyclerView()
-//
-//        rvAdapter = NoteAdapter(object : NoteClickListener {
-//            override fun editNote(note: Note) {
-//                val bundle = bundleOf("noteId" to note.id)
-//                findNavController().navigate(
-//                    R.id.action_noteFragment_to_newNoteModal,
-//                    bundle
-//                )
-//            }
-//        })
-//
-//        val recyclerView = binding.noteRecyclerView
-//        recyclerView.adapter = rvAdapter
-//
-//        viewModel.allNotes.observe(viewLifecycleOwner){ notes ->
-//            rvAdapter.submitList(notes)
-//        }
-
         binding.noteRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = rvAdapter
@@ -188,19 +168,17 @@ class NoteFragment : Fragment() {
     }
 
     private fun setUpRecyclerView(spanCount: Int) {
-        binding.noteRecyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL).apply {
-                reverseLayout = false
-            }
-            setHasFixedSize(true)
-            adapter = rvAdapter
-            postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
-            viewTreeObserver.addOnPreDrawListener {
-                startPostponedEnterTransition()
-                true
-            }
+    binding.noteRecyclerView.apply {
+        layoutManager = StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL)
+        setHasFixedSize(true)
+        adapter = rvAdapter
+        postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
+        viewTreeObserver.addOnPreDrawListener {
+            startPostponedEnterTransition()
+            true
         }
     }
+}
 
 
     override fun onDestroyView() {
@@ -211,15 +189,4 @@ class NoteFragment : Fragment() {
 
 }
 
-//private fun setUpRecyclerView(spanCount: Int) {
-//    binding.noteRecyclerView.apply {
-//        layoutManager = StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL)
-//        setHasFixedSize(true)
-//        adapter = rvAdapter
-//        postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
-//        viewTreeObserver.addOnPreDrawListener {
-//            startPostponedEnterTransition()
-//            true
-//        }
-//    }
-//}
+
