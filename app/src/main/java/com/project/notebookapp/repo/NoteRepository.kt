@@ -6,8 +6,10 @@ import com.project.notebookapp.data.Note
 interface NoteRepository {
 
     val allNotes: LiveData<List<Note>>
-    suspend fun insertOrUpdate(note: Note)
-    suspend fun delete(note: Note)
+    suspend fun saveNote(note: Note)
+    suspend fun updateNote(note: Note)
+    suspend fun deleteNote(note: Note)
     fun getNoteById(noteId: Long): LiveData<Note>
+    fun searchNotes(query: String): LiveData<List<Note>>
     fun getNumberOfNotes(): Int
 }

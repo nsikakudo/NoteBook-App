@@ -1,5 +1,6 @@
 package com.project.notebookapp.ui
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.project.notebookapp.R
 import com.project.notebookapp.data.Note
@@ -25,7 +27,8 @@ import com.project.notebookapp.utils.NotePriority
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-
+import java.text.SimpleDateFormat
+import java.util.Date
 class NewNoteFragment : Fragment() {
 
     private var _binding: FragmentNewNoteModalBinding? = null
@@ -33,9 +36,13 @@ class NewNoteFragment : Fragment() {
 
     private val noteRepository: NoteRepository by inject()
 
-    private val viewModel: NoteViewModel by viewModel { parametersOf(noteRepository)  }
+    private val viewModel: NoteViewModel by viewModel { parametersOf(noteRepository) }
 
     private var isExpanded = false
+
+    private var selectedColor: Int = 0
+
+    private var lastEditedTimestamp: Long? = null
 
     private var selectedPriority: NotePriority = NotePriority.HIGH
 
@@ -70,6 +77,9 @@ class NewNoteFragment : Fragment() {
 
         val noteId = arguments?.getLong("noteId", -1L) ?: -1L
 
+        val pattern = "dd-MM-yyyy h:mm a"
+        val dateFormat = SimpleDateFormat(pattern)
+
         if (noteId != -1L) {
             viewModel.getNoteById(noteId).observe(viewLifecycleOwner) { note ->
                 note?.let {
@@ -77,7 +87,9 @@ class NewNoteFragment : Fragment() {
                     binding.edtTitle.setText(it.title)
                     binding.edtNote.setText(it.content)
                     selectedPriority = it.priority
-                    binding.editModeText.visibility = View.VISIBLE
+                    selectedColor = it.color
+                    val formattedDate = dateFormat.format(Date(it.timestamp))
+                    binding.editModeText.text = getString(R.string.edited_on, formattedDate)
                 }
             }
         } else {
@@ -85,12 +97,16 @@ class NewNoteFragment : Fragment() {
             binding.editModeText.visibility = View.INVISIBLE
         }
 
+        binding.backButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.saveButton.setOnClickListener {
             onSaveButtonClick()
         }
 
         binding.shareButton.setOnClickListener {
-            Toast.makeText(requireContext(), "Note Shared", Toast.LENGTH_SHORT).show()
+            shareNote()
         }
 
         binding.addColor.setOnClickListener {
@@ -123,22 +139,25 @@ class NewNoteFragment : Fragment() {
         val timestamp = System.currentTimeMillis()
 
         if (title.isNotEmpty() && content.isNotEmpty()) {
+
             if (existingNote != null) {
                 val updatedNote = existingNote!!.copy(
                     title = title,
                     content = content,
                     timestamp = timestamp,
-                    priority = selectedPriority
+                    priority = selectedPriority,
+                    color = selectedColor
                 )
-                viewModel.insertOrUpdate(updatedNote)
+                viewModel.updateNote(updatedNote)
             } else {
                 val newNote = Note(
                     title = title,
                     content = content,
                     timestamp = System.currentTimeMillis(),
-                    priority = selectedPriority
+                    priority = selectedPriority,
+                    color = selectedColor
                 )
-                viewModel.insertOrUpdate(newNote)
+                viewModel.saveNote(newNote)
                 showNotification()
             }
             requireActivity().onBackPressed()
@@ -168,7 +187,6 @@ class NewNoteFragment : Fragment() {
             Toast.makeText(requireContext(), "Permission required for notifications.", Toast.LENGTH_SHORT).show()
         }
     }
-
     private fun requestNotificationPermission() {
         try {
             val notificationManager = NotificationManagerCompat.from(requireContext())
@@ -182,7 +200,31 @@ class NewNoteFragment : Fragment() {
             Toast.makeText(requireContext(),"Notification settings not found.", Toast.LENGTH_SHORT).show()
         }
     }
+    private fun shareNote() {
+        val title = binding.edtTitle.text.toString()
+        val content = binding.edtNote.text.toString()
 
+        if (title.isNotEmpty() && content.isNotEmpty()) {
+            val noteText = "$title\n\n$content"
+
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, noteText)
+
+            val shareIntentChooser = Intent.createChooser(shareIntent, "Share via")
+            if (shareIntent.resolveActivity(requireActivity().packageManager) != null) {
+                startActivity(shareIntentChooser)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "No apps available to handle sharing",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        } else {
+            Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
+        }
+    }
     private fun shrinkFab(){
         binding.transparentBg.visibility = View.GONE
         binding.addNoteFeatures.startAnimation(rotateAntiClockWiseFabAnim)
@@ -224,17 +266,29 @@ class NewNoteFragment : Fragment() {
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
     }
-
+    @SuppressLint("SuspiciousIndentation")
     private fun showColorPalette() {
         val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
         val binding = FragmentColorPaletteModalBinding.inflate(LayoutInflater.from(requireContext()))
         val bottomSheetView = binding.root
+
+            binding.colorPicker.setOnColorSelectedListener { color ->
+                handleColorSelection(color)
+                bottomSheetDialog.dismiss()
+            }
+
         binding.btnCancel.setOnClickListener {
             bottomSheetDialog.dismiss()
         }
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
     }
+
+    private fun handleColorSelection(selectedColor: Int) {
+        binding.container.setBackgroundColor(selectedColor)
+        this.selectedColor = selectedColor
+    }
+
     fun onBackPressed() {
         if (isExpanded) {
             shrinkFab()

@@ -40,6 +40,8 @@ class NoteAdapter(private val listener: NoteClickListener) :
             val formattedTime = formatDate(note.timestamp)
             tvDate.text = formattedTime
 
+            binding.cardView.setBackgroundColor(note.color)
+
             val priority = note.priority
             priorityLevel.text = priority.toString()
             priorityLevel.setTextColor(ContextCompat.getColor(itemView.context, priority.colorResId))

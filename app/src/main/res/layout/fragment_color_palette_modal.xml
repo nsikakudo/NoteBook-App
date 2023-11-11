@@ -28,10 +28,10 @@
 
         <com.thebluealliance.spectrum.SpectrumPalette
             android:id="@+id/color_picker"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="8dp"
             android:layout_marginBottom="24dp"
             app:spectrum_autoPadding="true"
             app:spectrum_columnCount="6"

@@ -8,9 +8,10 @@ import com.project.notebookapp.utils.NotePriority
 data class Note(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-    val title: String,
-    val content: String,
-    val timestamp: Long,
-    val priority: NotePriority
+    var title: String,
+    var content: String,
+    var timestamp: Long,
+    var priority: NotePriority,
+    var color: Int
 )
 
