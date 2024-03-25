@@ -8,16 +8,36 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="grey">#424040</color>
+    <color name="grey">#979494</color>
+    <color name="black1">#1F2937</color>
     <color name="grey1">#F3E6E6</color>
-    <color name="orange">#ED8B6C</color>
-    <color name="green">#89F18D</color>
-    <color name="purple">#CC6FDC</color>
-    <color name="skyBlue">#75B6EA</color>
-    <color name="red">#EC5252</color>
-    <color name="yellow">#E8DE87</color>
-    <color name="deep_yellow">#E6D32F</color>
-    <color name="pink">#DA85A2</color>
+    <color name="orange">#F3CABE</color>
+    <color name="pink1">#FFE7E2</color>
+    <color name="green">#CEFACF</color>
+    <color name="green1">#DDFFDF</color>
+    <color name="purple">#E2C0E8</color>
+    <color name="skyBlue1">#75B6EA</color>
+    <color name="skyBlue">#D5E6F4</color>
+    <color name="red">#EDA4A4</color>
+    <color name="red1">#F42121</color>
+    <color name="yellow">#EAE3AB</color>
+    <color name="deep_yellow">#EADB60</color>
+    <color name="deep_yellow1">#CCB70A</color>
+    <color name="bg_yellow">#FFE4B0</color>
+    <color name="blue">#B9C7F1</color>
+    <color name="blue1">#0D44E8</color>
+    <color name="pink">#ECBBCB</color>
+    <color name="default_selected_color">#EF6F6F</color>
 
+    <color name="light_blue">#ADD8E6</color>
+    <color name="sky_blue">#87CEEB</color>
+    <color name="royal_blue">#4169E1</color>
+    <color name="navy_blue">#000080</color>
+
+    <color name="light_green">#90EE90</color>
+    <color name="lime_green">#32CD32</color>
+    <color name="forest_green">#228B22</color>
+    <color name="teal">#008080</color>
+    <color name="pale_yellow">#FFFF99</color>
 
 </resources>

@@ -12,18 +12,32 @@
 
     <string name="about_us">About Us</string>
     <string name="share">share</string>
-        <string name="about_details">Welcome to our innovative and user-friendly note-taking app for Android! We are passionate about providing you with a seamless and efficient way to capture your thoughts, ideas, and important information on the go. \n \nAt <b>D\'NoteBook</b>, we understand the significance of keeping track of your daily inspirations and tasks. Our app is designed to empower you to organize your life effortlessly while maintaining a minimalistic and intuitive interface.</string>
-        <string name="mission">Our Mission</string>
-        <string name="mission_details">Our mission is to enhance your productivity and creativity by offering a reliable digital platform for all your note-taking needs. We believe that technology should work for you, simplifying your life rather than complicating it. With this belief at heart, we are dedicated to delivering a note-taking app that harmoniously blends simplicity with powerful features.\n \nThank you for choosing <b>D\'NoteBook</b> as your go-to note-taking companion. \n\nWarm regards\, \n<b>The D\'NoteBook Team</b></string>
-        <string name="get_in_touch">Get In Touch</string>
-        <string name="touch_details">We love hearing from our users\! If you have any questions, suggestions, or feedback, feel free to reach out to us at <b>udonsikak13@gmail.com</b>. Your input drives us to continually refine and enhance our app to suit your needs.\n \nThank you for choosing <b>D\'NoteBook</b> as your go-to note-taking companion. Here\'s to a more organized and productive you\!\n\nWarm regards\, \n<b>The D\'NoteBook Team</b></string>
-        <string name="touch_details1">\nThank you for choosing <b>D\'NoteBook</b> as your go-to note-taking companion. \n\nWarm regards\, \n<b>The D\'NoteBook Team</b></string>
-    <string name="edited_on">Edited On</string>
+    <string name="about_us_title">About Our App</string>
+    <string name="about_us_intro">A brief introduction to our team.</string>
+    <string name="about_us_content">We are a passionate team dedicated to creating amazing apps. Connect with us on social media.</string>
+    <string name="about_us_twitter">Follow us on Twitter</string>
+    <string name="about_us_facebook">Like us on Facebook</string>
+    <string name="about_us_instagram">Like us on Instagram</string>
+    <string name="about_us_ok_button">OK</string>
+    <string name="edited_on">Edited On: %1$s</string>
     <string name="back_button">back button</string>
     <string name="save_button">save Button</string>
     <string name="title">Title</string>
     <string name="select_colour">select colour</string>
     <string name="add_color">add_color</string>
     <string name="btn_cancel">btn_cancel</string>
+    <string name="high">High</string>
+    <string name="medium">Medium</string>
+    <string name="low">Low</string>
+    <string name="add_colour">Add Colour</string>
+    <string name="add_priority_level">Add Priority Level</string>
+    <string name="this_the_title">This the title</string>
+
+    <string name="priority_low">Low Priority</string>
+    <string name="priority_medium">Medium Priority</string>
+    <string name="priority_high">High Priority</string>
+    <string name="twitter">Twitter</string>
+    <string name="facebook">Facebook</string>
+    <string name="facebook1">Facebook</string>
 
 </resources>
